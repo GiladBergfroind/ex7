@@ -48,7 +48,7 @@ HOENN_DATA = read_hoenn_csv("hoenn_pokedex.csv")
 
 def print_pokemon(pokemon):
     print(f'ID: {pokemon.get("ID")}, Name: {pokemon.get("Name")}, Type: {pokemon.get("Type")},'
-          f'HP: {pokemon.get("HP")}, Attack: {pokemon.get("Attack")}, Can Evolve {pokemon.get("Can Evolve")}')
+          f'HP: {pokemon.get("HP")}, Attack: {pokemon.get("Attack")}, Can Evolve: {pokemon.get("Can Evolve")}')
 
 def read_int_safe(prompt):
     """
@@ -326,6 +326,7 @@ def sort_owners_by_num_pokemon(root,numOfOwners):
     if numOfOwners == 0:
         print("No owners at all")
         return
+    print("=== The Owners we have, sorted by number of Pokemons ===")
     queue = []
     rootNum = 0
     queue.append(root)
@@ -343,9 +344,8 @@ def sort_owners_by_num_pokemon(root,numOfOwners):
             if len(queue[j].get("pokedex")) > len(queue[j].get("pokedex")):
                 queue[j],queue[j+1] = queue[j+1],queue[j]
     for h in range(numOfOwners):
-        pokedex = queue[h].get("pokedex")
-        print(f"Owner: {queue[h].get('owner')}")
-        print_owner(pokedex)
+        length = len(queue[h].get("pokedex"))
+        print(f"Owner: {queue[h].get('owner')} (has {length} pokemon")
     return
 ########################
 # 6) Print All
@@ -433,7 +433,7 @@ def display_filter_sub_menu(ownerNode):
         "4. Only HP above __\n5. Only names starting with letter(s)\n6. All of them!\n7. Back")
         choice = read_int_safe("Your choice:")
         if choice == 1:
-            wantedType = input("Which Type? (e.g. GRASS, WATER):\n")
+            wantedType = input("Which Type? (e.g. GRASS, WATER):")
             wantedType = wantedType.lower()
             for i in range (numOfPokemons):
                 currentPokemon = ownerNode.get("pokedex")[i]
@@ -471,7 +471,7 @@ def display_filter_sub_menu(ownerNode):
             if printcounter == 0:
                 print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 5:
-            startingLetters = input("Starting letter(s):\n")
+            startingLetters = input("Starting letter(s):")
             for i in range(numOfPokemons):
                 currentPokemon = ownerNode.get("pokedex")[i]
                 currentName = currentPokemon.get("Name").lower()
@@ -511,7 +511,7 @@ def existing_pokedex(ownerRoot):
     if ownerRoot is None:
         print("No owners at all")
         return
-    ownerName = input("Owner name:\n")
+    ownerName = input("Owner name:")
     currentOwner = find_owner_bst(ownerRoot,ownerName)
     if currentOwner is None:
         print(f"Owner '{ownerName}' not found.")
@@ -561,18 +561,21 @@ def main_menu():
         if numOfOwners == 0:
             ownerRoot = None
         if choice == 1:
-            ownerName = input('Owner name:\n')
+            ownerName = input('Owner name:')
             if  numOfOwners != 0 and find_owner_bst(ownerRoot,ownerName) != None:
                 print(f"Owner '{ownerName}' already exists. No new Pokedex created.\n")
                 continue
             print("Choose your starter Pokemon:\n1) Treecko\n2) Torchic\n3) Mudkip")
-            chosenPokemon = read_int_safe("Your choice")
+            chosenPokemon = read_int_safe("Your choice:")
             if chosenPokemon == 1:
                 firstPokemon = get_poke_dict_by_id(1)
+                print(f'New Pokedex created for {ownerName} with starter {firstPokemon.get("Name")}.')
             elif chosenPokemon == 2:
                 firstPokemon = get_poke_dict_by_id(4)
+                print(f'New Pokedex created for {ownerName} with starter {firstPokemon.get("name")}.')
             elif chosenPokemon == 3:
                 firstPokemon = get_poke_dict_by_id(7)
+                print(f'New Pokedex created for {ownerName} with starter {firstPokemon["name"]}.')
             else:
                 print("Invalid. No new Pokedex created.")
                 continue
@@ -589,7 +592,7 @@ def main_menu():
             if ownerRoot is None:
                 print("No owner at all")
                 continue
-            ownerName = input("Enter owner to delete:\n").lower()
+            ownerName = input("Enter owner to delete:").lower()
             oldOwner = find_owner_bst(ownerRoot,ownerName)
             if oldOwner is None:
                 print(f"Owner '{ownerName}' not found.")

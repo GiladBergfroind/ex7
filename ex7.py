@@ -60,7 +60,7 @@ def read_int_safe(prompt):
         if x.isdigit():
             x = int(x)
             isValid = 0
-        elif x[0] == '-' and x[1:].isdigit():
+        elif len(x) >1 and x[0] == '-' and x[1:].isdigit():
             x = int(x)
             return x
         else:
@@ -526,15 +526,24 @@ def existing_pokedex(ownerRoot):
               "4. Evolve Pokemon\n5. Back to Main")
         choice = read_int_safe("Your choice: ")
         if choice == 1:
+            numOfPokemons = len(currentOwner["pokedex"])
             id = read_int_safe("Enter Pokemon ID to add: ")
             if id < 1 or id > 135:
                 print(f"ID {id} not found in Honen data.")
                 continue
             else:
                 newPokemon = get_poke_dict_by_id(id)
-                add_pokemon_to_owner(currentOwner, newPokemon)
-                print(f'Pokemon {newPokemon.get("Name")} (ID {id}) added to {currentOwner["owner"]}\'s Pokedex.')
-                continue
+                for i in range(numOfPokemons):
+                    if id == currentOwner["pokedex"][i]["ID"]:
+                        print("Pokemon already in the list. No changes made.")
+                        noPokemon = 0
+                        continue
+                    else:
+                        noPokemon = 1
+                if noPokemon == 1:
+                    add_pokemon_to_owner(currentOwner, newPokemon)
+                    print(f'Pokemon {newPokemon.get("Name")} (ID {id}) added to {currentOwner["owner"]}\'s Pokedex.')
+                    continue
         elif choice == 2:
             display_filter_sub_menu(currentOwner)
         elif choice == 3:

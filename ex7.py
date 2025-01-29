@@ -47,8 +47,8 @@ HOENN_DATA = read_hoenn_csv("hoenn_pokedex.csv")
 ########################
 
 def print_pokemon(pokemon):
-    print(f"ID: {pokemon.get("ID")}, Name: {pokemon.get("Name")}, Type: {pokemon.get("Type")},"
-          f"HP: {pokemon.get("HP")}, Attack: {pokemon.get("Attack")}, Can Evolve {pokemon.get("Can Evolve")}")
+    print(f'ID: {pokemon.get("ID")}, Name: {pokemon.get("Name")}, Type: {pokemon.get("Type")},'
+          f'HP: {pokemon.get("HP")}, Attack: {pokemon.get("Attack")}, Can Evolve {pokemon.get("Can Evolve")}')
 
 def read_int_safe(prompt):
     """
@@ -222,7 +222,7 @@ def bfs_traversal(root,numOfOwners):
         rootNum += counter
     for j in range(numOfOwners):
         pokedex = queue[j].get("pokedex")
-        print(f"Owner: {queue[j].get("owner")}")
+        print(f'Owner: {queue[j].get("owner")}')
         print_owner(pokedex)
 
 def pre_order(root):
@@ -268,7 +268,7 @@ def release_pokemon_by_name(ownerNode):
         currentName = ownerNode.get("pokedex")[i].get("Name").lower()
         if nameToDelete == currentName:
             ownerNode.get("pokedex").remove(ownerNode.get("pokedex")[i])
-            print(f"Releasing {nameToDelete} from {ownerNode.get("owner")}.")
+            print(f'Releasing {nameToDelete} from {ownerNode.get("owner")}.')
             return
     print(f"No Pokemon named '{nameToDelete}' in a's Pokedex.")
     return
@@ -284,7 +284,7 @@ def evolve_pokemon_by_name(ownerNode):
     oldPokemonName = input("Enter Pokemon Name to evolve:\n")
     oldPokemon = get_poke_dict_by_name(oldPokemonName)
     if oldPokemon is None:
-        print(f"No Pokemon named '{oldPokemonName}' in {ownerNode.get("owner")}'s Pokedex.")
+        print(f"No Pokemon named '{oldPokemonName}' in {ownerNode.get('owner')}'s Pokedex.")
         return
     if oldPokemon.get("Can Evolve") == "FALSE":
         print(f"{oldPokemonName} cannot evolve.")
@@ -302,9 +302,9 @@ def evolve_pokemon_by_name(ownerNode):
     for i in range(numOfPokemons):
         newPokemon = pokedex[i]
         if newPokemonId == newPokemon.get("ID"):
-            print(f"Pokemon evolved from {oldPokemonName} (ID {oldPokemon.get("ID")}) to"
-                  f" {newPokemon.get("Name")} (ID {newPokemonId})."
-                  f"\n {newPokemon.get("Name")} was already present; releasing it immediately.")
+            print(f"Pokemon evolved from {oldPokemonName} (ID {oldPokemon.get('ID')}) to"
+                  f" {newPokemon.get('Name')} (ID {newPokemonId})."
+                  f"\n {newPokemon.get('Name')} was already present; releasing it immediately.")
     newPokemon = get_poke_dict_by_id(newPokemonId)
     pokedex.remove(pokedex[i])
     pokedex.append(newPokemon)
@@ -344,7 +344,7 @@ def sort_owners_by_num_pokemon(root,numOfOwners):
                 queue[j],queue[j+1] = queue[j+1],queue[j]
     for h in range(numOfOwners):
         pokedex = queue[h].get("pokedex")
-        print(f"Owner: {queue[h].get("owner")}")
+        print(f"Owner: {queue[h].get('owner')}")
         print_owner(pokedex)
     return
 ########################
@@ -360,15 +360,16 @@ def print_all_owners(ownerRoot,numOfOwners):
         return
     print("1) BFS\n2) Pre-Order\n3) In-Order\n4) Post-Order")
     choice = read_int_safe("Your choice:")
-    match choice:
-        case 1:
-            bfs_traversal(ownerRoot,numOfOwners)
-        case 2:
-            pre_order_print(ownerRoot)
-        case 3:
-            in_order_print(ownerRoot)
-        case 4:
-            post_order_print(ownerRoot)
+    if choice == 1:
+        bfs_traversal(ownerRoot,numOfOwners)
+    elif choice == 2:
+        pre_order_print(ownerRoot)
+    elif choice == 3:
+        in_order_print(ownerRoot)
+    elif choice == 4:
+        post_order_print(ownerRoot)
+    else:
+        print("Invalid choice")
 def pre_order_print(root):
     """
     Helper to print data in pre-order.
@@ -376,7 +377,7 @@ def pre_order_print(root):
     if root is None:
         return
     pokedex = root.get("pokedex")
-    print(f"Owner: {root.get("owner")}")
+    print(f"Owner: {root.get('owner')}")
     print_owner(pokedex)
     pre_order_print(root.get("left"))
     pre_order_print(root.get("right"))
@@ -389,7 +390,7 @@ def in_order_print(root):
         return
     pre_order_print(root.get("left"))
     pokedex = root.get("pokedex")
-    print(f"Owner: {root.get("owner")}")
+    print(f"Owner: {root.get('owner')}")
     print_owner(pokedex)
     pre_order_print(root.get("right"))
 
@@ -403,7 +404,7 @@ def post_order_print(root):
     pre_order_print(root.get("left"))
     pre_order_print(root.get("right"))
     pokedex = root.get("pokedex")
-    print(f"Owner: {root.get("owner")}")
+    print(f"Owner: {root.get('owner')}")
     print_owner(pokedex)
 
 
@@ -431,66 +432,65 @@ def display_filter_sub_menu(ownerNode):
         print("-- Display Filter Menu --\n1. Only a certain Type\n2. Only Evolvable\n3. Only Attack above __\n"
         "4. Only HP above __\n5. Only names starting with letter(s)\n6. All of them!\n7. Back")
         choice = read_int_safe("Your choice:")
-        match choice:
-            case 1:
-                wantedType = input("Which Type? (e.g. GRASS, WATER):\n")
-                wantedType = wantedType.lower()
-                for i in range (numOfPokemons):
-                    currentPokemon = ownerNode.get("pokedex")[i]
-                    currentType = currentPokemon.get("Type")
-                    currentType = currentType.lower()
-                    if currentType == wantedType:
-                        print_pokemon(currentPokemon)
-                        printcounter += 1
-                if printcounter == 0:
-                    print("There are no Pokemons in this Pokedex that match the criteria.")
-            case 2:
-                for i in range(numOfPokemons):
-                    currentPokemon = ownerNode.get("pokedex")[i]
-                    if currentPokemon.get("Can Evolve") == "TRUE":
-                        print_pokemon(currentPokemon)
-                        printcounter += 1
-                if printcounter == 0:
-                    print("There are no Pokemons in this Pokedex that match the criteria.")
-            case 3:
-                requiredAttack = read_int_safe("Enter Attack threshold:")
-                for i in range(numOfPokemons):
-                    currentPokemon = ownerNode.get("pokedex")[i]
-                    if currentPokemon.get("Attack") > requiredAttack:
-                        print_pokemon(currentPokemon)
-                        printcounter += 1
-                if printcounter == 0:
-                    print("There are no Pokemons in this Pokedex that match the criteria.")
-            case 4:
-                requiredHP = read_int_safe("Enter HP threshold:")
-                for i in range(numOfPokemons):
-                    currentPokemon = ownerNode.get("pokedex")[i]
-                    if currentPokemon.get("HP") > requiredHP:
-                        print_pokemon(currentPokemon)
-                        printcounter += 1
-                if printcounter == 0:
-                    print("There are no Pokemons in this Pokedex that match the criteria.")
-            case 5:
-                startingLetters = input("Starting letter(s):\n")
-                for i in range(numOfPokemons):
-                    currentPokemon = ownerNode.get("pokedex")[i]
-                    currentName = currentPokemon.get("Name").lower()
-                    if startingLetters in currentName:
-                        print_pokemon(currentPokemon)
-                        printcounter += 1
-                if printcounter == 0:
-                    print("There are no Pokemons in this Pokedex that match the criteria.")
-            case 6:
-                for i in range(numOfPokemons):
-                    currentPokemon = ownerNode.get("pokedex")[i]
+        if choice == 1:
+            wantedType = input("Which Type? (e.g. GRASS, WATER):\n")
+            wantedType = wantedType.lower()
+            for i in range (numOfPokemons):
+                currentPokemon = ownerNode.get("pokedex")[i]
+                currentType = currentPokemon.get("Type")
+                currentType = currentType.lower()
+                if currentType == wantedType:
                     print_pokemon(currentPokemon)
                     printcounter += 1
-                if printcounter == 0:
-                    print("There are no Pokemons in this Pokedex that match the criteria.")
-            case 7:
-                return
-            case _:
-                print("Invalid choice")
+            if printcounter == 0:
+                print("There are no Pokemons in this Pokedex that match the criteria.")
+        elif choice == 2:
+            for i in range(numOfPokemons):
+                currentPokemon = ownerNode.get("pokedex")[i]
+                if currentPokemon.get("Can Evolve") == "TRUE":
+                    print_pokemon(currentPokemon)
+                    printcounter += 1
+            if printcounter == 0:
+                print("There are no Pokemons in this Pokedex that match the criteria.")
+        elif choice == 3:
+            requiredAttack = read_int_safe("Enter Attack threshold:")
+            for i in range(numOfPokemons):
+                currentPokemon = ownerNode.get("pokedex")[i]
+                if currentPokemon.get("Attack") > requiredAttack:
+                    print_pokemon(currentPokemon)
+                    printcounter += 1
+            if printcounter == 0:
+                print("There are no Pokemons in this Pokedex that match the criteria.")
+        elif choice == 4:
+            requiredHP = read_int_safe("Enter HP threshold:")
+            for i in range(numOfPokemons):
+                currentPokemon = ownerNode.get("pokedex")[i]
+                if currentPokemon.get("HP") > requiredHP:
+                    print_pokemon(currentPokemon)
+                    printcounter += 1
+            if printcounter == 0:
+                print("There are no Pokemons in this Pokedex that match the criteria.")
+        elif choice == 5:
+            startingLetters = input("Starting letter(s):\n")
+            for i in range(numOfPokemons):
+                currentPokemon = ownerNode.get("pokedex")[i]
+                currentName = currentPokemon.get("Name").lower()
+                if startingLetters in currentName:
+                    print_pokemon(currentPokemon)
+                    printcounter += 1
+            if printcounter == 0:
+                print("There are no Pokemons in this Pokedex that match the criteria.")
+        elif choice == 6:
+            for i in range(numOfPokemons):
+                currentPokemon = ownerNode.get("pokedex")[i]
+                print_pokemon(currentPokemon)
+                printcounter += 1
+            if printcounter == 0:
+                print("There are no Pokemons in this Pokedex that match the criteria.")
+        elif choice == 7:
+            return
+        else:
+            print("Invalid choice")
 
 
 
@@ -521,27 +521,26 @@ def existing_pokedex(ownerRoot):
         print("=== Main Menu ===\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
               "4. Evolve Pokemon\n5. Back to Main")
         choice = read_int_safe("Your choice:")
-        match choice:
-            case 1:
-                id = read_int_safe("Enter Pokemon ID to add:")
-                if id < 1 or id > 135:
-                    print(f"ID {id} not found in Honen data.")
-                    continue
-                else:
-                    newPokemon = get_poke_dict_by_id(id)
-                    add_pokemon_to_owner(currentOwner, newPokemon)
-                    print(f"Pokemon {newPokemon.get("Name")} (ID {id}) added to {ownerName}'s Pokedex.")
-                    continue
-            case 2:
-                display_filter_sub_menu(currentOwner)
-            case 3:
-                release_pokemon_by_name(currentOwner)
-            case 4:
-                evolve_pokemon_by_name(currentOwner)
-            case 5:
-                return
-            case _:
-                print("Invalid choice")
+        if choice == 1:
+            id = read_int_safe("Enter Pokemon ID to add:")
+            if id < 1 or id > 135:
+                print(f"ID {id} not found in Honen data.")
+                continue
+            else:
+                newPokemon = get_poke_dict_by_id(id)
+                add_pokemon_to_owner(currentOwner, newPokemon)
+                print(f'Pokemon {newPokemon.get("Name")} (ID {id}) added to {ownerName}\'s Pokedex.')
+                continue
+        elif choice == 2:
+            display_filter_sub_menu(currentOwner)
+        elif choice == 3:
+            release_pokemon_by_name(currentOwner)
+        elif choice == 4:
+            evolve_pokemon_by_name(currentOwner)
+        elif choice == 5:
+            return
+        else:
+            print("Invalid choice")
 
 def main_menu():
     """
@@ -561,61 +560,61 @@ def main_menu():
         choice = read_int_safe("Your choice:")
         if numOfOwners == 0:
             ownerRoot = None
-        match choice:
-            case '1':
-                ownerName = input('Owner name:\n')
-                if  numOfOwners != 0 and find_owner_bst(ownerRoot,ownerName) != None:
-                    print(f"Owner '{ownerName}' already exists. No new Pokedex created.\n")
-                    continue
-                print("Choose your starter Pokemon:\n1) Treecko\n2) Torchic\n3) Mudkip")
-                chosenPokemon = read_int_safe("Your choice")
-                match chosenPokemon:
-                    case 1:
-                        firstPokemon = get_poke_dict_by_id(1)
-                    case 2:
-                        firstPokemon = get_poke_dict_by_id(4)
-                    case 3:
-                        firstPokemon = get_poke_dict_by_id(7)
-                    case _:
-                        print("Invalid. No new Pokedex created.")
-                        continue
-                newOwner = create_owner_node(ownerName, firstPokemon)
-                if numOfOwners == 0:
-                    ownerRoot = newOwner
+        if choice == 1:
+            ownerName = input('Owner name:\n')
+            if  numOfOwners != 0 and find_owner_bst(ownerRoot,ownerName) != None:
+                print(f"Owner '{ownerName}' already exists. No new Pokedex created.\n")
+                continue
+            print("Choose your starter Pokemon:\n1) Treecko\n2) Torchic\n3) Mudkip")
+            chosenPokemon = read_int_safe("Your choice")
+            if chosenPokemon == 1:
+                firstPokemon = get_poke_dict_by_id(1)
+            elif chosenPokemon == 2:
+                firstPokemon = get_poke_dict_by_id(4)
+            elif chosenPokemon == 3:
+                firstPokemon = get_poke_dict_by_id(7)
+            else:
+                print("Invalid. No new Pokedex created.")
+                continue
+            newOwner = create_owner_node(ownerName, firstPokemon)
+            if numOfOwners == 0:
+                ownerRoot = newOwner
+                numOfOwners += 1
+            else:
+                if(insert_owner_bst(ownerRoot,newOwner) == True):
                     numOfOwners += 1
-                else:
-                    if(insert_owner_bst(ownerRoot,newOwner) == True):
-                        numOfOwners += 1
-            case 2:
-                existing_pokedex(ownerRoot)
-            case 3:
-                if ownerRoot is None:
-                    print("No owner at all")
-                    continue
-                ownerName = input("Enter owner to delete:\n").lower()
-                oldOwner = find_owner_bst(ownerRoot,ownerName)
-                if oldOwner is None:
-                    print(f"Owner '{ownerName}' not found.")
-                    continue
-                oldOwner = delete_owner_bst(ownerRoot,ownerName)
-                if oldOwner is ownerRoot:
-                    ownerRoot = oldOwner
-                numOfOwners -= 1
-            case 4:
-                sort_owners_by_num_pokemon(ownerRoot,numOfOwners)
-            case 5:
-                print_all_owners(ownerRoot,numOfOwners)
-            case 6:
-                print("Goodbye!")
-            case _:
-                print("Invalid choice")
+        elif choice == 2:
+            existing_pokedex(ownerRoot)
+        elif choice == 3:
+            if ownerRoot is None:
+                print("No owner at all")
+                continue
+            ownerName = input("Enter owner to delete:\n").lower()
+            oldOwner = find_owner_bst(ownerRoot,ownerName)
+            if oldOwner is None:
+                print(f"Owner '{ownerName}' not found.")
+                continue
+            oldOwner = delete_owner_bst(ownerRoot,ownerName)
+            if oldOwner is ownerRoot:
+                ownerRoot = oldOwner
+            numOfOwners -= 1
+        elif choice == 4:
+            sort_owners_by_num_pokemon(ownerRoot,numOfOwners)
+        elif choice == 5:
+            print_all_owners(ownerRoot,numOfOwners)
+        elif choice == 6:
+            print("Goodbye!")
+            choice = 6
+            return
+        else:
+            print("Invalid choice")
 
 
 def main():
     """
     Entry point: calls main_menu().
     """
-    main_menu();
+    main_menu()
     pass
 
 if __name__ == "__main__":

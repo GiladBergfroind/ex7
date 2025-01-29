@@ -262,15 +262,15 @@ def release_pokemon_by_name(ownerNode):
     Prompt user for a Pokemon name, remove it from this owner's pokedex if found.
     """
     numOfPokemons = len(ownerNode.get("pokedex"))
-    nameToDelete = input("Enter Pokemon Name to release:").lower()
+    nameToDelete = input("Enter Pokemon Name to release: ").lower()
     i = 0
     for i in range(numOfPokemons):
         currentName = ownerNode.get("pokedex")[i].get("Name").lower()
         if nameToDelete == currentName:
             ownerNode.get("pokedex").remove(ownerNode.get("pokedex")[i])
-            print(f'Releasing {nameToDelete} from {ownerNode.get("owner")}.')
+            print(f'Releasing {ownerNode.get("pokedex")[i].get("Name")} from {ownerNode.get("owner")}.')
             return
-    print(f"No Pokemon named '{nameToDelete}' in a's Pokedex.")
+    print(f"No Pokemon named '{nameToDelete}' in {ownerNode['owner']}\'s Pokedex.")
     return
 def evolve_pokemon_by_name(ownerNode):
     """

@@ -362,7 +362,7 @@ def print_all_owners(ownerRoot,numOfOwners):
         print("No owners at all")
         return
     print("1) BFS\n2) Pre-Order\n3) In-Order\n4) Post-Order")
-    choice = read_int_safe("Your choice:")
+    choice = read_int_safe("Your choice: ")
     if choice == 1:
         bfs_traversal(ownerRoot,numOfOwners)
     elif choice == 2:
@@ -434,7 +434,7 @@ def display_filter_sub_menu(ownerNode):
         printcounter = 0
         print("-- Display Filter Menu --\n1. Only a certain Type\n2. Only Evolvable\n3. Only Attack above __\n"
         "4. Only HP above __\n5. Only names starting with letter(s)\n6. All of them!\n7. Back")
-        choice = read_int_safe("Your choice:")
+        choice = read_int_safe("Your choice: ")
         if choice == 1:
             wantedType = input("Which Type? (e.g. GRASS, WATER):")
             wantedType = wantedType.lower()
@@ -523,7 +523,7 @@ def existing_pokedex(ownerRoot):
     while choice != 5:
         print(f"=== {currentOwner['owner']}\'s pokedex menu ===\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
               "4. Evolve Pokemon\n5. Back to Main")
-        choice = read_int_safe("Your choice:")
+        choice = read_int_safe("Your choice: ")
         if choice == 1:
             id = read_int_safe("Enter Pokemon ID to add:")
             if id < 1 or id > 135:
@@ -560,16 +560,16 @@ def main_menu():
     while choice != 6:
         print("=== Main Menu ===\n1. New Pokedex\n2. Existing Pokedex\n3. Delete a Pokedex\n"
           "4. Display owners by number of Pokemon\n5. Print All\n6. Exit")
-        choice = read_int_safe("Your choice:")
+        choice = read_int_safe("Your choice: ")
         if numOfOwners == 0:
             ownerRoot = None
         if choice == 1:
-            ownerName = input('Owner name:')
+            ownerName = input('Owner name: ')
             if  numOfOwners != 0 and find_owner_bst(ownerRoot,ownerName) != None:
                 print(f"Owner '{ownerName}' already exists. No new Pokedex created.\n")
                 continue
             print("Choose your starter Pokemon:\n1) Treecko\n2) Torchic\n3) Mudkip")
-            chosenPokemon = read_int_safe("Your choice:")
+            chosenPokemon = read_int_safe("Your choice: ")
             if chosenPokemon == 1:
                 firstPokemon = get_poke_dict_by_id(1)
                 print(f'New Pokedex created for {ownerName} with starter {firstPokemon.get("Name")}.')

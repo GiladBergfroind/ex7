@@ -56,7 +56,7 @@ def read_int_safe(prompt):
     """
     isValid = 1
     while isValid:
-        x = input(f"{prompt}\n")
+        x = input(f"{prompt}")
         if x.isdigit():
             x = int(x)
             isValid = 0
@@ -340,12 +340,15 @@ def sort_owners_by_num_pokemon(root,numOfOwners):
             counter += 1
         rootNum += counter
     for i in range(numOfOwners):
-        for j in range(numOfOwners):
-            if len(queue[j].get("pokedex")) > len(queue[j].get("pokedex")):
+        for j in range(numOfOwners-1):
+            if len(queue[j].get("pokedex")) > len(queue[j+1].get("pokedex")):
                 queue[j],queue[j+1] = queue[j+1],queue[j]
+            elif (len(queue[j].get("pokedex")) == len(queue[j+1].get("pokedex"))
+                  and queue[j].get("owner") > queue[j+1].get("owner")):
+                queue[j], queue[j + 1] = queue[j + 1], queue[j]
     for h in range(numOfOwners):
         length = len(queue[h].get("pokedex"))
-        print(f"Owner: {queue[h].get('owner')} (has {length} pokemon")
+        print(f"Owner: {queue[h].get('owner')} (has {length} pokemon)")
     return
 ########################
 # 6) Print All
@@ -518,7 +521,7 @@ def existing_pokedex(ownerRoot):
         return
     choice = 1
     while choice != 5:
-        print("=== Main Menu ===\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
+        print(f"=== {currentOwner['owner']}\'s pokedex menu ===\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
               "4. Evolve Pokemon\n5. Back to Main")
         choice = read_int_safe("Your choice:")
         if choice == 1:
@@ -572,10 +575,10 @@ def main_menu():
                 print(f'New Pokedex created for {ownerName} with starter {firstPokemon.get("Name")}.')
             elif chosenPokemon == 2:
                 firstPokemon = get_poke_dict_by_id(4)
-                print(f'New Pokedex created for {ownerName} with starter {firstPokemon.get("name")}.')
+                print(f'New Pokedex created for {ownerName} with starter {firstPokemon.get("Name")}.')
             elif chosenPokemon == 3:
                 firstPokemon = get_poke_dict_by_id(7)
-                print(f'New Pokedex created for {ownerName} with starter {firstPokemon["name"]}.')
+                print(f'New Pokedex created for {ownerName} with starter {firstPokemon["Name"]}.')
             else:
                 print("Invalid. No new Pokedex created.")
                 continue

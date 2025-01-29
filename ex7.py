@@ -281,7 +281,7 @@ def evolve_pokemon_by_name(ownerNode):
     4) If new is a duplicate, remove it immediately
     """
     pokedex = ownerNode.get("pokedex")
-    oldPokemonName = input("Enter Pokemon Name to evolve:\n")
+    oldPokemonName = input("Enter Pokemon Name to evolve: ")
     oldPokemon = get_poke_dict_by_name(oldPokemonName)
     if oldPokemon is None:
         print(f"No Pokemon named '{oldPokemonName}' in {ownerNode.get('owner')}'s Pokedex.")
@@ -432,11 +432,11 @@ def display_filter_sub_menu(ownerNode):
     currentPokemon = ownerNode.get("pokedex")[0]
     while choice != 7:
         printcounter = 0
-        print("-- Display Filter Menu --\n1. Only a certain Type\n2. Only Evolvable\n3. Only Attack above __\n"
+        print("\n-- Display Filter Menu --\n1. Only a certain Type\n2. Only Evolvable\n3. Only Attack above __\n"
         "4. Only HP above __\n5. Only names starting with letter(s)\n6. All of them!\n7. Back")
         choice = read_int_safe("Your choice: ")
         if choice == 1:
-            wantedType = input("Which Type? (e.g. GRASS, WATER):")
+            wantedType = input("Which Type? (e.g. GRASS, WATER): ")
             wantedType = wantedType.lower()
             for i in range (numOfPokemons):
                 currentPokemon = ownerNode.get("pokedex")[i]
@@ -456,7 +456,7 @@ def display_filter_sub_menu(ownerNode):
             if printcounter == 0:
                 print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 3:
-            requiredAttack = read_int_safe("Enter Attack threshold:")
+            requiredAttack = read_int_safe("Enter Attack threshold: ")
             for i in range(numOfPokemons):
                 currentPokemon = ownerNode.get("pokedex")[i]
                 if currentPokemon.get("Attack") > requiredAttack:
@@ -465,7 +465,7 @@ def display_filter_sub_menu(ownerNode):
             if printcounter == 0:
                 print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 4:
-            requiredHP = read_int_safe("Enter HP threshold:")
+            requiredHP = read_int_safe("Enter HP threshold: ")
             for i in range(numOfPokemons):
                 currentPokemon = ownerNode.get("pokedex")[i]
                 if currentPokemon.get("HP") > requiredHP:
@@ -474,7 +474,7 @@ def display_filter_sub_menu(ownerNode):
             if printcounter == 0:
                 print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 5:
-            startingLetters = input("Starting letter(s):")
+            startingLetters = input("Starting letter(s): ")
             for i in range(numOfPokemons):
                 currentPokemon = ownerNode.get("pokedex")[i]
                 currentName = currentPokemon.get("Name").lower()
@@ -491,6 +491,7 @@ def display_filter_sub_menu(ownerNode):
             if printcounter == 0:
                 print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 7:
+            print("Back to Pokedex Menu.\n")
             return
         else:
             print("Invalid choice")
@@ -521,11 +522,11 @@ def existing_pokedex(ownerRoot):
         return
     choice = 1
     while choice != 5:
-        print(f"-- {currentOwner['owner']}\'s Pokedex menu --\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
+        print(f"-- {currentOwner['owner']}\'s Pokedex Menu --\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
               "4. Evolve Pokemon\n5. Back to Main")
         choice = read_int_safe("Your choice: ")
         if choice == 1:
-            id = read_int_safe("Enter Pokemon ID to add:")
+            id = read_int_safe("Enter Pokemon ID to add: ")
             if id < 1 or id > 135:
                 print(f"ID {id} not found in Honen data.")
                 continue

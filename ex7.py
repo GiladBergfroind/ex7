@@ -526,6 +526,7 @@ def existing_pokedex(ownerRoot):
               "4. Evolve Pokemon\n5. Back to Main")
         choice = read_int_safe("Your choice: ")
         if choice == 1:
+            newPokemon2 = None
             numOfPokemons = len(currentOwner["pokedex"])
             id = read_int_safe("Enter Pokemon ID to add: ")
             if id < 1 or id > 135:
@@ -536,11 +537,9 @@ def existing_pokedex(ownerRoot):
                 for i in range(numOfPokemons):
                     if id == currentOwner["pokedex"][i]["ID"]:
                         print("Pokemon already in the list. No changes made.")
-                        noPokemon = 0
+                        newPokemon2 = currentOwner["pokedex"][i]
                         continue
-                    else:
-                        noPokemon = 1
-                if noPokemon == 1:
+                if newPokemon2 is None:
                     add_pokemon_to_owner(currentOwner, newPokemon)
                     print(f'Pokemon {newPokemon.get("Name")} (ID {id}) added to {currentOwner["owner"]}\'s Pokedex.')
                     continue

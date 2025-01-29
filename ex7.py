@@ -47,7 +47,7 @@ HOENN_DATA = read_hoenn_csv("hoenn_pokedex.csv")
 ########################
 
 def print_pokemon(pokemon):
-    print(f'ID: {pokemon.get("ID")}, Name: {pokemon.get("Name")}, Type: {pokemon.get("Type")},'
+    print(f'ID: {pokemon.get("ID")}, Name: {pokemon.get("Name")}, Type: {pokemon.get("Type")}, '
           f'HP: {pokemon.get("HP")}, Attack: {pokemon.get("Attack")}, Can Evolve: {pokemon.get("Can Evolve")}')
 
 def read_int_safe(prompt):
@@ -348,7 +348,7 @@ def sort_owners_by_num_pokemon(root,numOfOwners):
                 queue[j], queue[j + 1] = queue[j + 1], queue[j]
     for h in range(numOfOwners):
         length = len(queue[h].get("pokedex"))
-        print(f"Owner: {queue[h].get('owner')} (has {length} pokemon)")
+        print(f"Owner: {queue[h].get('owner')} (has {length} Pokemon)")
     return
 ########################
 # 6) Print All
@@ -362,7 +362,7 @@ def print_all_owners(ownerRoot,numOfOwners):
         print("No owners at all")
         return
     print("1) BFS\n2) Pre-Order\n3) In-Order\n4) Post-Order")
-    choice = read_int_safe("Your choice: ")
+    choice = read_int_safe("Your choice:\n")
     if choice == 1:
         bfs_traversal(ownerRoot,numOfOwners)
     elif choice == 2:
@@ -514,14 +514,14 @@ def existing_pokedex(ownerRoot):
     if ownerRoot is None:
         print("No owners at all")
         return
-    ownerName = input("Owner name:")
+    ownerName = input("Owner name:\n")
     currentOwner = find_owner_bst(ownerRoot,ownerName)
     if currentOwner is None:
         print(f"Owner '{ownerName}' not found.")
         return
     choice = 1
     while choice != 5:
-        print(f"=== {currentOwner['owner']}\'s pokedex menu ===\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
+        print(f"-- {currentOwner['owner']}\'s Pokedex menu --\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
               "4. Evolve Pokemon\n5. Back to Main")
         choice = read_int_safe("Your choice: ")
         if choice == 1:
@@ -532,7 +532,7 @@ def existing_pokedex(ownerRoot):
             else:
                 newPokemon = get_poke_dict_by_id(id)
                 add_pokemon_to_owner(currentOwner, newPokemon)
-                print(f'Pokemon {newPokemon.get("Name")} (ID {id}) added to {ownerName}\'s Pokedex.')
+                print(f'Pokemon {newPokemon.get("Name")} (ID {id}) added to {currentOwner["owner"]}\'s Pokedex.')
                 continue
         elif choice == 2:
             display_filter_sub_menu(currentOwner)

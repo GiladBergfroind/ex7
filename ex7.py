@@ -367,9 +367,9 @@ def print_all_owners(ownerRoot,numOfOwners):
     elif choice == 2:
         pre_order_print(ownerRoot)
     elif choice == 3:
-        in_order_print(ownerRoot)
-    elif choice == 4:
         post_order_print(ownerRoot)
+    elif choice == 4:
+        in_order_print(ownerRoot)
     else:
         print("Invalid choice.")
 def pre_order_print(root):
@@ -390,11 +390,11 @@ def in_order_print(root):
     """
     if root is None:
         return
-    pre_order_print(root.get("left"))
+    in_order_print(root.get("left"))
     pokedex = root.get("pokedex")
     print(f"Owner: {root.get('owner')}")
     print_owner(pokedex)
-    pre_order_print(root.get("right"))
+    in_order_print(root.get("right"))
 
 def post_order_print(root):
     """
@@ -403,8 +403,8 @@ def post_order_print(root):
 
     if root is None:
         return
-    pre_order_print(root.get("left"))
-    pre_order_print(root.get("right"))
+    post_order_print(root.get("left"))
+    post_order_print(root.get("right"))
     pokedex = root.get("pokedex")
     print(f"Owner: {root.get('owner')}")
     print_owner(pokedex)
@@ -530,7 +530,7 @@ def existing_pokedex(ownerRoot):
         return
     choice = 1
     while choice != 5:
-        print(f"-- {currentOwner['owner']}\'s Pokedex Menu --\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
+        print(f"\n-- {currentOwner['owner']}\'s Pokedex Menu --\n1. Add Pokemon\n2. Display Pokedex\n3. Release Pokemon\n"
               "4. Evolve Pokemon\n5. Back to Main")
         choice = read_int_safe("Your choice: ")
         if choice == 1:

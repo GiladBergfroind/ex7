@@ -267,8 +267,8 @@ def release_pokemon_by_name(ownerNode):
     for i in range(numOfPokemons):
         currentName = ownerNode.get("pokedex")[i].get("Name").lower()
         if nameToDelete == currentName:
-            ownerNode.get("pokedex").remove(ownerNode.get("pokedex")[i])
             print(f'Releasing {ownerNode.get("pokedex")[i].get("Name")} from {ownerNode.get("owner")}.')
+            ownerNode.get("pokedex").remove(ownerNode.get("pokedex")[i])
             return
     print(f"No Pokemon named '{nameToDelete}' in {ownerNode['owner']}\'s Pokedex.")
     return
@@ -429,67 +429,76 @@ def display_filter_sub_menu(ownerNode):
     choice = 1
     i = 0
     numOfPokemons = len(ownerNode.get("pokedex"))
-    currentPokemon = ownerNode.get("pokedex")[0]
+    if numOfPokemons == 0:
+        currentPokemon = None
+    else:
+        currentPokemon = ownerNode.get("pokedex")[0]
     while choice != 7:
         printcounter = 0
         print("\n-- Display Filter Menu --\n1. Only a certain Type\n2. Only Evolvable\n3. Only Attack above __\n"
         "4. Only HP above __\n5. Only names starting with letter(s)\n6. All of them!\n7. Back")
         choice = read_int_safe("Your choice: ")
         if choice == 1:
-            wantedType = input("Which Type? (e.g. GRASS, WATER): ")
-            wantedType = wantedType.lower()
-            for i in range (numOfPokemons):
-                currentPokemon = ownerNode.get("pokedex")[i]
-                currentType = currentPokemon.get("Type")
-                currentType = currentType.lower()
-                if currentType == wantedType:
-                    print_pokemon(currentPokemon)
-                    printcounter += 1
-            if printcounter == 0:
+            if numOfPokemons != 0:
+                wantedType = input("Which Type? (e.g. GRASS, WATER): ")
+                wantedType = wantedType.lower()
+                for i in range (numOfPokemons):
+                    currentPokemon = ownerNode.get("pokedex")[i]
+                    currentType = currentPokemon.get("Type")
+                    currentType = currentType.lower()
+                    if currentType == wantedType:
+                        print_pokemon(currentPokemon)
+                        printcounter += 1
+            elif printcounter == 0 or numOfPokemons == 0:
                 print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 2:
             for i in range(numOfPokemons):
-                currentPokemon = ownerNode.get("pokedex")[i]
-                if currentPokemon.get("Can Evolve") == "TRUE":
-                    print_pokemon(currentPokemon)
-                    printcounter += 1
-            if printcounter == 0:
-                print("There are no Pokemons in this Pokedex that match the criteria.")
+                if numOfPokemons != 0:
+                    currentPokemon = ownerNode.get("pokedex")[i]
+                    if currentPokemon.get("Can Evolve") == "TRUE":
+                        print_pokemon(currentPokemon)
+                        printcounter += 1
+                if printcounter == 0 or numOfPokemons == 0:
+                    print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 3:
             requiredAttack = read_int_safe("Enter Attack threshold: ")
             for i in range(numOfPokemons):
-                currentPokemon = ownerNode.get("pokedex")[i]
-                if currentPokemon.get("Attack") > requiredAttack:
-                    print_pokemon(currentPokemon)
-                    printcounter += 1
-            if printcounter == 0:
-                print("There are no Pokemons in this Pokedex that match the criteria.")
+                if numOfPokemons != 0:
+                    currentPokemon = ownerNode.get("pokedex")[i]
+                    if currentPokemon.get("Attack") > requiredAttack:
+                        print_pokemon(currentPokemon)
+                        printcounter += 1
+                if printcounter == 0 or numOfPokemons == 0:
+                    print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 4:
             requiredHP = read_int_safe("Enter HP threshold: ")
             for i in range(numOfPokemons):
-                currentPokemon = ownerNode.get("pokedex")[i]
-                if currentPokemon.get("HP") > requiredHP:
-                    print_pokemon(currentPokemon)
-                    printcounter += 1
-            if printcounter == 0:
-                print("There are no Pokemons in this Pokedex that match the criteria.")
+                if numOfPokemons != 0:
+                    currentPokemon = ownerNode.get("pokedex")[i]
+                    if currentPokemon.get("HP") > requiredHP:
+                        print_pokemon(currentPokemon)
+                        printcounter += 1
+                if printcounter == 0 or numOfPokemons == 0:
+                    print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 5:
             startingLetters = input("Starting letter(s): ")
             for i in range(numOfPokemons):
-                currentPokemon = ownerNode.get("pokedex")[i]
-                currentName = currentPokemon.get("Name").lower()
-                if startingLetters in currentName:
-                    print_pokemon(currentPokemon)
-                    printcounter += 1
-            if printcounter == 0:
-                print("There are no Pokemons in this Pokedex that match the criteria.")
+                if numOfPokemons != 0:
+                    currentPokemon = ownerNode.get("pokedex")[i]
+                    currentName = currentPokemon.get("Name").lower()
+                    if startingLetters in currentName:
+                        print_pokemon(currentPokemon)
+                        printcounter += 1
+                if printcounter == 0 or numOfPokemons == 0:
+                    print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 6:
             for i in range(numOfPokemons):
-                currentPokemon = ownerNode.get("pokedex")[i]
-                print_pokemon(currentPokemon)
-                printcounter += 1
-            if printcounter == 0:
-                print("There are no Pokemons in this Pokedex that match the criteria.")
+                if numOfPokemons != 0:
+                    currentPokemon = ownerNode.get("pokedex")[i]
+                    print_pokemon(currentPokemon)
+                    printcounter += 1
+                if printcounter == 0 or numOfPokemons == 0:
+                    print("There are no Pokemons in this Pokedex that match the criteria.")
         elif choice == 7:
             print("Back to Pokedex Menu.\n")
             return

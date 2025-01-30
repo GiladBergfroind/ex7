@@ -281,32 +281,28 @@ def evolve_pokemon_by_name(ownerNode):
     4) If new is a duplicate, remove it immediately
     """
     pokedex = ownerNode.get("pokedex")
-    oldPokemonName = input("Enter Pokemon Name to evolve: ").lower()
+    oldPokemonName = input("Enter Pokemon Name to evolve: ")
     oldPokemon = get_poke_dict_by_name(oldPokemonName)
     if oldPokemon is None:
         print(f"No Pokemon named '{oldPokemonName}' in {ownerNode.get('owner')}'s Pokedex.")
         return
     if oldPokemon.get("Can Evolve") == "FALSE":
-        print(f"{oldPokemonName} cannot evolve.")
+        print(f"{oldPokemon['Name']} cannot evolve.")
         return
     newPokemonId = oldPokemon.get("ID") + 1
     numOfPokemons = len(pokedex)
-    i = 0
-    for i in range(numOfPokemons):
-        if oldPokemonName != pokedex[i].get("Name"):
-            i += 1
-        else:
+    for j in range(numOfPokemons):
+        if ownerNode["pokedex"][j]["Name"].lower() is oldPokemonName.lower():
             break
-    if i == numOfPokemons:
-        i = 0
     for i in range(numOfPokemons):
         newPokemon = pokedex[i]
         if newPokemonId == newPokemon.get("ID"):
-            print(f"Pokemon evolved from {oldPokemonName} (ID {oldPokemon.get('ID')}) to"
+            print(f"Pokemon evolved from {oldPokemon.get('Name')} (ID {oldPokemon.get('ID')}) to"
                   f" {newPokemon.get('Name')} (ID {newPokemonId})."
                   f"\n {newPokemon.get('Name')} was already present; releasing it immediately.")
     newPokemon = get_poke_dict_by_id(newPokemonId)
-    pokedex.remove(pokedex[i])
+    print(f"Pokemon evolved from {pokedex[j]['Name']} (ID {pokedex[j]['ID']}) to {newPokemon['Name']} (ID {newPokemonId}).")
+    pokedex.remove(pokedex[j])
     pokedex.append(newPokemon)
 
 ########################

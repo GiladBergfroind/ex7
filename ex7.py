@@ -84,7 +84,7 @@ def get_poke_dict_by_name(name):
         if currentName != name:
             currentName = HOENN_DATA[i].get("Name").lower()
         else:
-            return HOENN_DATA[i]
+            return HOENN_DATA[i-1]
     return None
 
 def print_owner(pokeList):

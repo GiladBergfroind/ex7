@@ -64,7 +64,7 @@ def read_int_safe(prompt):
             x = int(x)
             return x
         else:
-            print("Invalid input")
+            print("Invalid input.")
     return int(x)
 
 def get_poke_dict_by_id(poke_id):
@@ -323,7 +323,7 @@ def sort_owners_by_num_pokemon(root,numOfOwners):
     Gather owners, sort them by (#pokedex size, then alpha), print results.
     """
     if numOfOwners == 0:
-        print("No owners at all")
+        print("No owners at all.")
         return
     print("=== The Owners we have, sorted by number of Pokemons ===")
     queue = []
@@ -343,7 +343,7 @@ def sort_owners_by_num_pokemon(root,numOfOwners):
             if len(queue[j].get("pokedex")) > len(queue[j+1].get("pokedex")):
                 queue[j],queue[j+1] = queue[j+1],queue[j]
             elif (len(queue[j].get("pokedex")) == len(queue[j+1].get("pokedex"))
-                  and queue[j].get("owner") > queue[j+1].get("owner")):
+                  and (queue[j].get("owner").lower()) > (queue[j+1].get("owner")).lower()):
                 queue[j], queue[j + 1] = queue[j + 1], queue[j]
     for h in range(numOfOwners):
         length = len(queue[h].get("pokedex"))
@@ -371,7 +371,7 @@ def print_all_owners(ownerRoot,numOfOwners):
     elif choice == 4:
         post_order_print(ownerRoot)
     else:
-        print("Invalid choice")
+        print("Invalid choice.")
 def pre_order_print(root):
     """
     Helper to print data in pre-order.
@@ -502,7 +502,7 @@ def display_filter_sub_menu(ownerNode):
             print("Back to Pokedex Menu.\n")
             return
         else:
-            print("Invalid choice")
+            print("Invalid choice.")
 
 
 
@@ -523,7 +523,7 @@ def existing_pokedex(ownerRoot):
     if ownerRoot is None:
         print("No owners at all")
         return
-    ownerName = input("Owner name:\n")
+    ownerName = input("Owner name:")
     currentOwner = find_owner_bst(ownerRoot,ownerName)
     if currentOwner is None:
         print(f"Owner '{ownerName}' not found.")
@@ -561,7 +561,7 @@ def existing_pokedex(ownerRoot):
             print("Back to Main Menu.\n")
             return
         else:
-            print("Invalid choice")
+            print("Invalid choice.")
 
 def main_menu():
     """
@@ -613,11 +613,13 @@ def main_menu():
             if ownerRoot is None:
                 print("No owner at all")
                 continue
-            ownerName = input("Enter owner to delete:").lower()
+            ownerName = input("Enter owner to delete: ").lower()
             oldOwner = find_owner_bst(ownerRoot,ownerName)
             if oldOwner is None:
                 print(f"Owner '{ownerName}' not found.")
                 continue
+            print(f"Deleting {oldOwner['owner']}'s entire Pokedex...\n")
+            print("Pokedex deleted.\n")
             oldOwner = delete_owner_bst(ownerRoot,ownerName)
             if oldOwner is ownerRoot:
                 ownerRoot = oldOwner
@@ -631,7 +633,7 @@ def main_menu():
             choice = 6
             return
         else:
-            print("Invalid choice")
+            print("Invalid choice.")
 
 
 def main():

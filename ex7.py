@@ -292,7 +292,8 @@ def evolve_pokemon_by_name(ownerNode):
     newPokemonId = oldPokemon.get("ID") + 1
     numOfPokemons = len(pokedex)
     for j in range(numOfPokemons):
-        if ownerNode["pokedex"][j]["Name"].lower() is oldPokemonName.lower():
+        name = ownerNode["pokedex"][j]["Name"]
+        if ownerNode["pokedex"][j]["Name"].lower() == oldPokemonName.lower():
             break
     for i in range(numOfPokemons):
         newPokemon = pokedex[i]
@@ -300,6 +301,8 @@ def evolve_pokemon_by_name(ownerNode):
             print(f"Pokemon evolved from {oldPokemon.get('Name')} (ID {oldPokemon.get('ID')}) to"
                   f" {newPokemon.get('Name')} (ID {newPokemonId})."
                   f"\n {newPokemon.get('Name')} was already present; releasing it immediately.")
+            pokedex.remove(pokedex[j])
+            return
     newPokemon = get_poke_dict_by_id(newPokemonId)
     print(f"Pokemon evolved from {pokedex[j]['Name']} (ID {pokedex[j]['ID']}) to {newPokemon['Name']} (ID {newPokemonId}).")
     pokedex.remove(pokedex[j])

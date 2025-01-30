@@ -367,9 +367,9 @@ def print_all_owners(ownerRoot,numOfOwners):
     elif choice == 2:
         pre_order_print(ownerRoot)
     elif choice == 3:
-        post_order_print(ownerRoot)
-    elif choice == 4:
         in_order_print(ownerRoot)
+    elif choice == 4:
+        post_order_print(ownerRoot)
     else:
         print("Invalid choice.")
 def pre_order_print(root):
@@ -523,7 +523,7 @@ def existing_pokedex(ownerRoot):
     if ownerRoot is None:
         print("No owners at all")
         return
-    ownerName = input("Owner name:")
+    ownerName = input("Owner name: ")
     currentOwner = find_owner_bst(ownerRoot,ownerName)
     if currentOwner is None:
         print(f"Owner '{ownerName}' not found.")

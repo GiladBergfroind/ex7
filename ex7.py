@@ -281,7 +281,7 @@ def evolve_pokemon_by_name(ownerNode):
     4) If new is a duplicate, remove it immediately
     """
     pokedex = ownerNode.get("pokedex")
-    oldPokemonName = input("Enter Pokemon Name to evolve: ")
+    oldPokemonName = input("Enter Pokemon Name to evolve: ").lower()
     oldPokemon = get_poke_dict_by_name(oldPokemonName)
     if oldPokemon is None:
         print(f"No Pokemon named '{oldPokemonName}' in {ownerNode.get('owner')}'s Pokedex.")
@@ -559,6 +559,7 @@ def existing_pokedex(ownerRoot):
         elif choice == 4:
             evolve_pokemon_by_name(currentOwner)
         elif choice == 5:
+            print("Back to Main Menu.\n")
             return
         else:
             print("Invalid choice")

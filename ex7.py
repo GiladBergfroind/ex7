@@ -620,9 +620,9 @@ def main_menu():
                 continue
             print(f"Deleting {oldOwner['owner']}'s entire Pokedex...\n")
             print("Pokedex deleted.\n")
-            oldOwner = delete_owner_bst(ownerRoot,ownerName)
+            newOwnerRoot = delete_owner_bst(ownerRoot,ownerName)
             if oldOwner is ownerRoot:
-                ownerRoot = oldOwner
+                ownerRoot = newOwnerRoot
             numOfOwners -= 1
         elif choice == 4:
             sort_owners_by_num_pokemon(ownerRoot,numOfOwners)
